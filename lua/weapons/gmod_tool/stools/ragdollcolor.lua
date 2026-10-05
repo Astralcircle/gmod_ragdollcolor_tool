@@ -52,9 +52,10 @@ end
 function TOOL:LeftClick(trace)
 	local ent = trace.Entity
 	if not ent:IsValid() or ent:GetClass() ~= "prop_ragdoll" then return false end
-	if CLIENT then return true end
 
-	SetRagdollColor(self:GetOwner(), ent, {r = self:GetClientNumber("r", 0), g = self:GetClientNumber("g", 0), b = self:GetClientNumber("b", 0)})
+	if SERVER then
+		SetRagdollColor(self:GetOwner(), ent, {r = self:GetClientNumber("r", 0), g = self:GetClientNumber("g", 0), b = self:GetClientNumber("b", 0)})
+	end
 
 	return true
 end
@@ -62,12 +63,13 @@ end
 function TOOL:RightClick(trace)
 	local ent = trace.Entity
 	if not ent:IsValid() or ent:GetClass() ~= "prop_ragdoll" then return false end
-	if CLIENT then return true end
 
-	local color = ent.RagdollColor or color_white
-	self:GetOwner():ConCommand("ragdollcolor_r " .. color.r)
-	self:GetOwner():ConCommand("ragdollcolor_g " .. color.g)
-	self:GetOwner():ConCommand("ragdollcolor_b " .. color.b)
+	if SERVER then
+		local color = ent.RagdollColor or color_white
+		self:GetOwner():ConCommand("ragdollcolor_r " .. color.r)
+		self:GetOwner():ConCommand("ragdollcolor_g " .. color.g)
+		self:GetOwner():ConCommand("ragdollcolor_b " .. color.b)
+	end
 
 	return true
 end
@@ -75,9 +77,10 @@ end
 function TOOL:Reload(trace)
 	local ent = trace.Entity
 	if not ent:IsValid() or ent:GetClass() ~= "prop_ragdoll" then return false end
-	if CLIENT then return true end
 
-	SetRagdollColor(self:GetOwner(), ent, {})
+	if SERVER then
+		SetRagdollColor(self:GetOwner(), ent, {})
+	end
 
 	return true
 end
